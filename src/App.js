@@ -1,14 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
-import Nav from './View/Nav/Nav';
-import { useReducer, useState } from 'react';
-
+import { useState } from 'react';
+import Nav from './Nav/Nav';
+import Todos from './Todos/Todos';
 const App = () => {
     // template + logic
     // JSX
     // babel
     // SPA : single page aplication
-
+    // re-render
     const [action, setAction] = useState('');
     const [todos, setTodos] = useState([
         {
@@ -25,32 +25,31 @@ const App = () => {
         },
     ]);
 
-    const handleClick = (event) => {
+    const handleClick = () => {
         if (!action) {
             alert('Missing');
             return;
         } else {
             setTodos([...todos, { id: Math.round(Math.random() * 100), title: action }]);
         }
-        setAction('')
+        setAction('');
     };
     const handleOnChange = (e) => {
         setAction(e.target.value);
     };
-    // re-render
     return (
         <div className="App">
             <Nav />
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
                 <span>Todos list of Việt</span>
-                <input placeholder="tìm kiếm" value={action} onChange={(e) => handleOnChange(e)} />
+                <input 
+                    placeholder="tìm kiếm" 
+                    value={action} 
+                    onChange={(e) => handleOnChange(e)}  
+                />
                 <button onClick={() => handleClick()}>Click me!</button>
-                <div className="todo-container">
-                    {todos.map((todo, index) => {
-                        return <li key={todo.id}>{todo.title}</li>;
-                    })}
-                </div>
+                <Todos title='All todos' myData={todos} />
             </header>
         </div>
     );
